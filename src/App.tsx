@@ -1,19 +1,21 @@
 /**
  * FTU Green Campus – Main App Entry Point
  * 
- * A polished demo UI for FTU's green campus initiative.
+ * Admin-web style layout with sidebar navigation
  * Primary: FTU red | Accent: emerald
  * 
  * Features:
- * - Sticky top bar with user info
- * - Bottom navigation with center camera button
+ * - Sidebar navigation (left)
+ * - Header with search and user info (top)
+ * - Desktop-first layout
  * - Schedule, Todo, Impact, and Profile screens
  */
 
 import { useState } from "react";
 import { UI, cn } from "./theme";
 import type { Tab } from "./types";
-import { TopBar, BottomNav, CameraModal } from "./components";
+import { MainLayout } from "./layouts/MainLayout";
+import { CameraModal } from "./components";
 import { ScheduleScreen, ActionsScreen, ImpactScreen, ProfileScreen } from "./screens";
 
 export default function App() {
@@ -22,21 +24,18 @@ export default function App() {
 
   return (
     <div className={cn("min-h-screen", UI.pageBg)}>
-      <TopBar
-        title="FTU Green Campus"
-        subtitle="Check-in xanh realtime • tích điểm rèn luyện"
-        onOpenProfile={() => setTab("profile")}
-      />
-
-      <div className="mx-auto max-w-md">
+      <MainLayout
+        activeTab={tab}
+        onTabChange={(t) => setTab(t as Tab)}
+        onOpenCamera={() => setCameraOpen(true)}
+      >
         {tab === "schedule" && <ScheduleScreen />}
         {tab === "actions" && <ActionsScreen />}
         {tab === "impact" && <ImpactScreen />}
         {tab === "profile" && <ProfileScreen />}
-      </div>
+      </MainLayout>
 
       <CameraModal open={cameraOpen} onClose={() => setCameraOpen(false)} />
-      <BottomNav tab={tab} setTab={setTab} onOpenCamera={() => setCameraOpen(true)} />
     </div>
   );
 }

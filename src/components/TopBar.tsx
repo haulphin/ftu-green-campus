@@ -1,4 +1,3 @@
-import { UI, cn } from "../theme";
 import { FTULogo } from "./FTULogo";
 
 interface TopBarProps {
@@ -11,49 +10,48 @@ export function TopBar({ title, subtitle, onOpenProfile }: TopBarProps) {
     return (
         <div className="sticky top-0 z-40">
             <div className="mx-auto max-w-md">
-                <div className="px-4 pt-3">
-                    <div className="rounded-3xl overflow-hidden shadow-[0_12px_30px_rgba(220,38,38,0.22)]">
-                        <div className="bg-gradient-to-r from-red-700 via-red-600 to-red-700">
-                            <div className="px-4 py-3 flex items-center justify-between gap-3">
-                                <div className="min-w-0">
-                                    <div className="flex items-center gap-2">
-                                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/15 border border-white/25 overflow-hidden">
-                                            <FTULogo className="h-7 w-7" />
-                                        </span>
-                                        <div className="text-white font-semibold tracking-tight truncate">
-                                            {title}
-                                        </div>
-                                        <div className="text-[11px] text-white/75 font-medium truncate">
-                                            Foreign Trade University
-                                        </div>
-                                    </div>
-                                    {subtitle ? (
-                                        <div className="mt-1 text-white/80 text-xs truncate">{subtitle}</div>
-                                    ) : null}
+                <div className="px-4 pt-3 pb-2">
+                    {/* Vibrant gradient header with glassmorphism */}
+                    <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-red-600 via-red-500 to-rose-600 shadow-[0_8px_32px_rgba(220,38,38,0.35)] animate-gradient">
+                        <div className="px-4 py-4 flex items-center justify-between gap-3 backdrop-blur-sm bg-white/10">
+                            {/* Left: Logo and title */}
+                            <div className="flex items-center gap-3 min-w-0">
+                                <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-lg animate-float-subtle">
+                                    <FTULogo className="h-7 w-7 text-white" />
                                 </div>
-
-                                <button
-                                    onClick={onOpenProfile}
-                                    className={cn(UI.chip, "shrink-0")}
-                                    title="Tài khoản"
-                                >
-                                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-400/30 border border-white/25">
-                                        ⭐
-                                    </span>
-                                    <span className="inline-flex items-center gap-2">
-                                        <span className="h-7 w-7 rounded-full bg-white/30 border border-white/25 flex items-center justify-center">
-                                            👤
-                                        </span>
-                                        <span className="text-left leading-tight">
-                                            <span className="block text-xs font-semibold">Lê Thành Nguyên</span>
-                                            <span className="block text-[11px] text-white/80">2312155138</span>
-                                        </span>
-                                        <span className="text-white/80">▾</span>
-                                    </span>
-                                </button>
+                                <div className="min-w-0">
+                                    <div className="font-bold text-white tracking-tight truncate text-lg" style={{ fontFamily: 'Montserrat, sans-serif', textShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
+                                        {title}
+                                    </div>
+                                    {subtitle && (
+                                        <div className="text-xs text-white/90 truncate mt-0.5 font-medium">{subtitle}</div>
+                                    )}
+                                </div>
                             </div>
-                            <div className="h-2 bg-gradient-to-b from-white/10 to-transparent" />
+
+                            {/* Right: User profile button with vibrant design */}
+                            <button
+                                onClick={onOpenProfile}
+                                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-200 hover:scale-105 active:scale-95 shrink-0 shadow-lg"
+                                title="Tài khoản"
+                            >
+                                <div className="flex items-center gap-2">
+                                    {/* Points badge with gradient */}
+                                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-xs font-bold shadow-md animate-pulse-scale">
+                                        <span className="text-sm">⭐</span>
+                                        <span>120</span>
+                                    </div>
+
+                                    {/* Avatar with gradient border */}
+                                    <div className="h-9 w-9 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white text-base font-semibold shadow-md">
+                                        👤
+                                    </div>
+                                </div>
+                            </button>
                         </div>
+
+                        {/* Decorative bottom gradient */}
+                        <div className="h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                     </div>
                 </div>
             </div>
