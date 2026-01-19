@@ -10,9 +10,9 @@ export function ScheduleScreen() {
     }
 
     return (
-        <div style={{ padding: '20px', minHeight: '100vh' }}>
+        <div style={{ padding: '12px', minHeight: '100vh' }}>
             {/* Header */}
-            <div style={{ marginBottom: '24px', paddingTop: '8px' }}>
+            <div style={{ marginBottom: '16px' }}>
                 <h2 style={{ fontSize: '28px', fontWeight: '800', margin: 0, color: '#333' }}>Lịch học hôm nay</h2>
                 <div style={{ fontSize: '14px', color: '#666', marginTop: '6px' }}>Lịch học & gợi ý xanh theo bối cảnh</div>
             </div>
