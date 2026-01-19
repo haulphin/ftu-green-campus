@@ -21,6 +21,15 @@ import { ScheduleScreen, ActionsScreen, ImpactScreen, ProfileScreen } from "./sc
 export default function App() {
   const [tab, setTab] = useState<Tab>("schedule");
   const [cameraOpen, setCameraOpen] = useState(false);
+  const [savedEvents, setSavedEvents] = useState<string[]>([]); // IDs of saved events
+
+  const toggleSaveEvent = (eventId: string) => {
+    setSavedEvents(prev =>
+      prev.includes(eventId)
+        ? prev.filter(id => id !== eventId)
+        : [...prev, eventId]
+    );
+  };
 
   return (
     <div className={cn("min-h-screen", UI.pageBg)}>
@@ -29,8 +38,8 @@ export default function App() {
         onTabChange={(t) => setTab(t as Tab)}
         onOpenCamera={() => setCameraOpen(true)}
       >
-        {tab === "schedule" && <ScheduleScreen />}
-        {tab === "actions" && <ActionsScreen />}
+        {tab === "schedule" && <ScheduleScreen savedEvents={savedEvents} onToggleSave={toggleSaveEvent} />}
+        {tab === "actions" && <ActionsScreen savedEvents={savedEvents} />}
         {tab === "impact" && <ImpactScreen />}
         {tab === "profile" && <ProfileScreen />}
       </MainLayout>

@@ -1,6 +1,6 @@
 // src/screens/ActionsScreen.tsx
 import { useState } from "react";
-import { classesMock, todosMock } from "../data";
+import { classesMock, todosMock, eventsMock } from "../data";
 
 interface CustomTodo {
     id: string;
@@ -8,9 +8,15 @@ interface CustomTodo {
     icon: string;
     kind: "study" | "green";
     relatedTo: string;
+    desc?: string;
+    points?: number;
 }
 
-export function ActionsScreen() {
+interface ActionsScreenProps {
+    savedEvents: string[];
+}
+
+export function ActionsScreen({ savedEvents }: ActionsScreenProps) {
     const todayClasses = classesMock;
     const [completedTodos, setCompletedTodos] = useState<Record<string, boolean>>({});
     const [customTodos, setCustomTodos] = useState<CustomTodo[]>([]);
@@ -40,11 +46,29 @@ export function ActionsScreen() {
         setShowAddModal(false);
     };
 
-    // Combine original todos with custom todos
+    // Combine original todos with custom todos and saved events
     const getAllTodos = (classId: string) => {
         const original = todosMock.filter((t) => t.relatedTo === classId);
         const custom = customTodos.filter((t) => t.relatedTo === classId);
-        return [...original, ...custom];
+
+        // Convert saved events to todos for the first class
+        const eventTodos: CustomTodo[] = classId === todayClasses[0]?.id
+            ? savedEvents.map(eventId => {
+                const event = eventsMock.find(e => e.id === eventId);
+                if (!event) return null;
+                return {
+                    id: `event-${event.id}`,
+                    title: event.title,
+                    icon: event.isGreen ? "🌿" : "📅",
+                    kind: event.isGreen ? "green" as const : "study" as const,
+                    relatedTo: classId,
+                    desc: `${event.start} – ${event.end} • ${event.location}`,
+                    points: event.isGreen ? event.points : undefined
+                };
+            }).filter(Boolean) as CustomTodo[]
+            : [];
+
+        return [...original, ...custom, ...eventTodos];
     };
 
     return (

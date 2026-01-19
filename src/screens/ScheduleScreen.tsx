@@ -1,20 +1,19 @@
 // src/screens/ScheduleScreen.tsx
-import { useState } from "react";
 import { campusUpdatesMock, eventsMock } from "../data";
 
-export function ScheduleScreen() {
-    const [eventJoined, setEventJoined] = useState<Record<string, boolean>>({});
+interface ScheduleScreenProps {
+    savedEvents: string[];
+    onToggleSave: (eventId: string) => void;
+}
 
-    function toggleJoin(eventId: string) {
-        setEventJoined((prev) => ({ ...prev, [eventId]: !prev[eventId] }));
-    }
+export function ScheduleScreen({ savedEvents, onToggleSave }: ScheduleScreenProps) {
 
     return (
         <div style={{ padding: '12px', minHeight: '100vh' }}>
             {/* Header */}
             <div style={{ marginBottom: '16px' }}>
                 <h2 style={{ fontSize: '28px', fontWeight: '800', margin: 0, color: '#333' }}>Lịch học hôm nay</h2>
-                <div style={{ fontSize: '14px', color: '#666', marginTop: '6px' }}>Lịch học & gợi ý xanh theo bối cảnh</div>
+                <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>Lịch học & gợi ý xanh theo bối cảnh</div>
             </div>
 
             {/* Stats Cards - Beautiful Design */}
@@ -117,7 +116,7 @@ export function ScheduleScreen() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                     {eventsMock.map((e) => {
-                        const joined = !!eventJoined[e.id];
+                        const isSaved = savedEvents.includes(e.id);
                         return (
                             <div key={e.id} style={{
                                 background: 'linear-gradient(135deg, #ffffff 0%, #fafafa 100%)',
@@ -146,21 +145,21 @@ export function ScheduleScreen() {
                                         <div style={{ marginTop: '4px' }}>📍 {e.location}</div>
                                     </div>
                                     <button
-                                        onClick={() => toggleJoin(e.id)}
+                                        onClick={() => onToggleSave(e.id)}
                                         style={{
                                             padding: '8px 18px',
-                                            background: joined ? 'linear-gradient(135deg, #00b894 0%, #00d2a0 100%)' : '#f3f4f6',
-                                            color: joined ? 'white' : '#374151',
+                                            background: isSaved ? 'linear-gradient(135deg, #00b894 0%, #00d2a0 100%)' : '#f3f4f6',
+                                            color: isSaved ? 'white' : '#374151',
                                             border: 'none',
                                             borderRadius: '24px',
                                             cursor: 'pointer',
                                             fontWeight: '700',
                                             fontSize: '13px',
-                                            boxShadow: joined ? '0 4px 12px rgba(0, 184, 148, 0.25)' : '0 2px 4px rgba(0,0,0,0.05)',
+                                            boxShadow: isSaved ? '0 4px 12px rgba(0, 184, 148, 0.25)' : '0 2px 4px rgba(0,0,0,0.05)',
                                             transition: 'all 0.2s'
                                         }}
                                     >
-                                        {joined ? '✓ Đã lưu' : '＋ Lưu'}
+                                        {isSaved ? '✓ Đã lưu' : '＋ Lưu'}
                                     </button>
                                 </div>
                             </div>
