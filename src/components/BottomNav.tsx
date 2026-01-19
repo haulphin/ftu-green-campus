@@ -1,4 +1,3 @@
-import { cn } from "../theme";
 import type { Tab } from "../types";
 
 interface BottomNavProps {
@@ -8,52 +7,102 @@ interface BottomNavProps {
 }
 
 export function BottomNav({ tab, setTab, onOpenCamera }: BottomNavProps) {
-    const Item = ({ id, label, icon }: { id: Tab; label: string; icon: string }) => {
-        const active = tab === id;
-        return (
-            <button
-                onClick={() => setTab(id)}
-                className={cn(
-                    "flex flex-col items-center justify-center gap-1 px-4 py-2.5 rounded-xl transition-all duration-200 min-w-[70px] relative overflow-hidden",
-                    active
-                        ? "bg-gradient-to-br from-red-500 via-rose-500 to-pink-500 text-white shadow-[0_4px_16px_rgba(220,38,38,0.4)] scale-105"
-                        : "text-gray-600 hover:bg-gradient-to-br hover:from-gray-100 hover:to-gray-200 hover:text-gray-900 hover:scale-105"
-                )}
-            >
-                {active && (
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 animate-shimmer" style={{ backgroundSize: '200% 200%' }} />
-                )}
-                <span className={cn("text-xl leading-none relative z-10", active && "animate-bounce-subtle")}>{icon}</span>
-                <span className="text-[10px] font-bold relative z-10" style={{ fontFamily: 'Montserrat, sans-serif' }}>{label}</span>
-            </button>
-        );
+    const getItemStyle = (id: Tab) => {
+        const isActive = tab === id;
+        return {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column' as const,
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '10px 8px',
+            background: 'transparent',
+            color: isActive ? '#fe2c55' : '#666666',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            fontWeight: isActive ? '700' : '500',
+            fontSize: '10px',
+            gap: '4px'
+        };
     };
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-30">
-            <div className="mx-auto max-w-md px-4 pb-4">
-                <div className="relative rounded-2xl bg-white/95 backdrop-blur-md border-2 border-gray-200 shadow-[0_-8px_32px_rgba(0,0,0,0.12)] px-2 py-2 flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                        <Item id="schedule" label="Lịch" icon="📅" />
-                        <Item id="actions" label="Todo" icon="✅" />
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <Item id="impact" label="Impact" icon="🌿" />
-                        <Item id="profile" label="Cá nhân" icon="👤" />
-                    </div>
+        <div style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            background: '#ffffff',
+            borderTop: '1px solid #e5e7eb',
+            boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.08)',
+            paddingBottom: 'env(safe-area-inset-bottom, 0px)'
+        }}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                maxWidth: '600px',
+                margin: '0 auto',
+                padding: '0',
+                height: '60px'
+            }}>
+                {/* Lịch */}
+                <button onClick={() => setTab('schedule')} style={getItemStyle('schedule')}>
+                    <span style={{ fontSize: '22px' }}>📅</span>
+                    <span>Lịch</span>
+                </button>
 
-                    {/* Center camera button - super vibrant and eye-catching */}
-                    <button
-                        onClick={onOpenCamera}
-                        className="absolute left-1/2 -translate-x-1/2 -top-8 h-20 w-20 rounded-2xl bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 text-white shadow-[0_12px_40px_rgba(220,38,38,0.6)] border-4 border-white flex items-center justify-center hover:scale-125 active:scale-95 transition-transform duration-200 animate-gradient animate-pulse-scale"
-                        aria-label="Open camera"
-                        title="Check-in xanh"
-                        style={{ backgroundSize: '200% 200%' }}
-                    >
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/0 via-white/30 to-white/0 animate-shimmer" style={{ backgroundSize: '200% 200%' }} />
-                        <span className="text-4xl relative z-10 animate-bounce-subtle">📷</span>
-                    </button>
-                </div>
+                {/* Todo */}
+                <button onClick={() => setTab('actions')} style={getItemStyle('actions')}>
+                    <span style={{ fontSize: '22px' }}>✅</span>
+                    <span>Todo</span>
+                </button>
+
+                {/* Camera Button - Center (larger) */}
+                <button
+                    onClick={onOpenCamera}
+                    style={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '0',
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        position: 'relative'
+                    }}
+                >
+                    <div style={{
+                        width: '48px',
+                        height: '48px',
+                        borderRadius: '12px',
+                        background: 'linear-gradient(135deg, #fe2c55 0%, #ff6b6b 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(254, 44, 85, 0.4)',
+                        transition: 'all 0.2s ease',
+                        fontSize: '26px'
+                    }}>
+                        📷
+                    </div>
+                </button>
+
+                {/* Impact */}
+                <button onClick={() => setTab('impact')} style={getItemStyle('impact')}>
+                    <span style={{ fontSize: '22px' }}>🌿</span>
+                    <span>Impact</span>
+                </button>
+
+                {/* Profile */}
+                <button onClick={() => setTab('profile')} style={getItemStyle('profile')}>
+                    <span style={{ fontSize: '22px' }}>👤</span>
+                    <span>Cá nhân</span>
+                </button>
             </div>
         </div>
     );
