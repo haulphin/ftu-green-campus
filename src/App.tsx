@@ -39,7 +39,7 @@ export default function App() {
         onOpenCamera={() => setCameraOpen(true)}
       >
         {tab === "schedule" && <ScheduleScreen savedEvents={savedEvents} onToggleSave={toggleSaveEvent} />}
-        {tab === "actions" && <ActionsScreen savedEvents={savedEvents} />}
+        {tab === "actions" && <ActionsScreen savedEvents={savedEvents} onOpenCamera={() => setCameraOpen(true)} />}
         {tab === "impact" && <ImpactScreen />}
         {tab === "profile" && <ProfileScreen />}
       </MainLayout>

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { UI, cn } from "../theme";
 
 interface CameraModalProps {
     open: boolean;
@@ -30,8 +29,22 @@ export function CameraModal({ open, onClose }: CameraModalProps) {
                     videoRef.current.srcObject = s;
                     await videoRef.current.play();
                 }
-            } catch {
-                setErr("Không mở được camera. Hãy cho phép quyền Camera trong trình duyệt.");
+            } catch (error: any) {
+                if (!mounted) return;
+                console.error("Camera error:", error);
+
+                // Provide specific error messages
+                if (error.name === 'NotAllowedError') {
+                    setErr("Bạn đã từ chối quyền camera. Vui lòng cho phép quyền Camera trong cài đặt trình duyệt.");
+                } else if (error.name === 'NotFoundError') {
+                    setErr("Không tìm thấy camera. Vui lòng kiểm tra thiết bị của bạn.");
+                } else if (error.name === 'NotReadableError') {
+                    setErr("Camera đang được sử dụng bởi ứng dụng khác. Vui lòng đóng ứng dụng đó và thử lại.");
+                } else if (error.name === 'NotSupportedError') {
+                    setErr("Trình duyệt không hỗ trợ camera hoặc cần HTTPS. Vui lòng sử dụng HTTPS.");
+                } else {
+                    setErr(`Không mở được camera: ${error.message || 'Lỗi không xác định'}`);
+                }
             }
         }
         start();
@@ -56,6 +69,13 @@ export function CameraModal({ open, onClose }: CameraModalProps) {
         setShot(c.toDataURL("image/jpeg", 0.9));
     }
 
+    function confirmPhoto() {
+        // Wait 1 second then close
+        setTimeout(() => {
+            close();
+        }, 1000);
+    }
+
     function close() {
         if (stream) stream.getTracks().forEach((t) => t.stop());
         setStream(null);
@@ -67,66 +87,108 @@ export function CameraModal({ open, onClose }: CameraModalProps) {
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 z-50">
-            <div className="absolute inset-0 bg-red-950/70" onClick={close} />
-            <div className="absolute inset-x-0 bottom-0 mx-auto max-w-md">
-                <div className="rounded-t-3xl bg-white shadow-2xl border border-red-100 overflow-hidden">
-                    <div className="px-5 pt-4 pb-3 flex items-center justify-between bg-gradient-to-r from-red-50 to-emerald-50 border-b border-red-100">
+        <div style={{ position: 'fixed', inset: 0, zIndex: 1000 }}>
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(127, 29, 29, 0.7)' }} onClick={close} />
+            <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, margin: '0 auto', maxWidth: '28rem' }}>
+                <div style={{ borderTopLeftRadius: '24px', borderTopRightRadius: '24px', background: 'white', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', border: '1px solid #fee2e2', overflow: 'hidden' }}>
+                    <div style={{ padding: '16px 20px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'linear-gradient(to right, #fef2f2, #f0fdf4)', borderBottom: '1px solid #fee2e2' }}>
                         <div>
-                            <div className={cn("text-base font-semibold tracking-tight", UI.text.strong)}>
+                            <div style={{ fontSize: '16px', fontWeight: '600', color: '#991b1b' }}>
                                 Locket FTU
                             </div>
-                            <div className={cn("text-xs", UI.text.soft)}>
+                            <div style={{ fontSize: '12px', color: '#666' }}>
                                 Chụp realtime để check-in xanh
                             </div>
                         </div>
-                        <button className={cn(UI.ghostBtn, "text-sm px-3 py-2")} onClick={close}>
+                        <button
+                            style={{ padding: '8px 12px', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '14px', color: '#666', fontWeight: '600' }}
+                            onClick={close}
+                        >
                             Đóng
                         </button>
                     </div>
 
-                    <div className="px-5 pb-4">
+                    <div style={{ padding: '0 20px 16px' }}>
                         {err ? (
-                            <div className="rounded-2xl bg-red-50 border border-red-100 px-3 py-3 text-sm text-red-900">
+                            <div style={{ borderRadius: '16px', background: '#fef2f2', border: '1px solid #fee2e2', padding: '12px', fontSize: '14px', color: '#991b1b', marginTop: '16px' }}>
                                 {err}
                             </div>
                         ) : (
-                            <div className="rounded-3xl overflow-hidden border border-red-100 bg-red-950">
+                            <div style={{ borderRadius: '24px', overflow: 'hidden', border: '1px solid #e5e7eb', background: 'transparent', marginTop: '16px', position: 'relative' }}>
                                 {shot ? (
-                                    <img src={shot} alt="shot" className="w-full h-[360px] object-cover" />
+                                    <img src={shot} alt="shot" style={{ width: '100%', height: '360px', objectFit: 'cover' }} />
                                 ) : (
                                     <video
                                         ref={videoRef}
-                                        className="w-full h-[360px] object-cover"
+                                        style={{ width: '100%', height: '360px', objectFit: 'cover' }}
                                         playsInline
                                         muted
                                     />
                                 )}
+
+                                {/* Circular capture button */}
+                                {!shot && (
+                                    <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)' }}>
+                                        <button
+                                            onClick={capture}
+                                            disabled={!!err}
+                                            style={{
+                                                width: '70px',
+                                                height: '70px',
+                                                borderRadius: '50%',
+                                                background: 'white',
+                                                border: '4px solid rgba(255, 255, 255, 0.8)',
+                                                cursor: 'pointer',
+                                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                transition: 'all 0.2s',
+                                                opacity: err ? 0.5 : 1
+                                            }}
+                                        >
+                                            <div style={{
+                                                width: '60px',
+                                                height: '60px',
+                                                borderRadius: '50%',
+                                                background: 'white'
+                                            }} />
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Confirm button when photo is taken */}
+                                {shot && (
+                                    <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)' }}>
+                                        <button
+                                            onClick={confirmPhoto}
+                                            style={{
+                                                padding: '12px 24px',
+                                                borderRadius: '24px',
+                                                background: 'rgba(34, 197, 94, 0.9)',
+                                                color: 'white',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                fontWeight: '600',
+                                                fontSize: '14px',
+                                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px'
+                                            }}
+                                        >
+                                            ✓ Xác nhận
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         )}
 
-                        <canvas ref={canvasRef} className="hidden" />
+                        <canvas ref={canvasRef} style={{ display: 'none' }} />
 
-                        <div className="mt-4 flex items-center gap-3">
-                            <button
-                                className="flex-1 rounded-2xl px-4 py-3 bg-red-600 text-white font-semibold shadow-sm hover:bg-red-700"
-                                onClick={capture}
-                                disabled={!!err}
-                            >
-                                📸 Chụp
-                            </button>
-                            <button
-                                className="flex-1 rounded-2xl px-4 py-3 bg-red-50 text-red-900 font-semibold hover:bg-red-100"
-                                onClick={() => setShot(null)}
-                                disabled={!shot}
-                            >
-                                Chụp lại
-                            </button>
-                        </div>
-
-                        <div className="mt-3 rounded-2xl bg-emerald-50 border border-emerald-200 px-3 py-3">
-                            <div className="text-sm font-semibold text-emerald-900">Gợi ý check-in</div>
-                            <div className="mt-1 text-sm text-emerald-900/80">
+                        <div style={{ marginTop: '12px', borderRadius: '16px', background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '12px' }}>
+                            <div style={{ fontSize: '14px', fontWeight: '600', color: '#166534' }}>Gợi ý check-in</div>
+                            <div style={{ marginTop: '4px', fontSize: '14px', color: 'rgba(22, 101, 52, 0.8)' }}>
                                 Refill / Không nhựa / Phân loại rác • tự gắn timestamp.
                             </div>
                         </div>

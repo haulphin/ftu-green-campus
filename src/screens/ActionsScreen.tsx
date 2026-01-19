@@ -14,9 +14,10 @@ interface CustomTodo {
 
 interface ActionsScreenProps {
     savedEvents: string[];
+    onOpenCamera: () => void;
 }
 
-export function ActionsScreen({ savedEvents }: ActionsScreenProps) {
+export function ActionsScreen({ savedEvents, onOpenCamera }: ActionsScreenProps) {
     const todayClasses = classesMock;
     const [completedTodos, setCompletedTodos] = useState<Record<string, boolean>>({});
     const [customTodos, setCustomTodos] = useState<CustomTodo[]>([]);
@@ -28,6 +29,16 @@ export function ActionsScreen({ savedEvents }: ActionsScreenProps) {
             ...prev,
             [todoId]: !prev[todoId]
         }));
+    };
+
+    const handleCheckIn = (todoId: string) => {
+        // Mark as completed
+        setCompletedTodos(prev => ({
+            ...prev,
+            [todoId]: true
+        }));
+        // Open camera
+        onOpenCamera();
     };
 
     const handleAddTodo = () => {
@@ -296,17 +307,19 @@ export function ActionsScreen({ savedEvents }: ActionsScreenProps) {
                                                             </span>
                                                         )}
                                                         {t.kind === 'green' && !isCompleted && (
-                                                            <button style={{
-                                                                padding: '4px 8px',
-                                                                background: '#fe2c55',
-                                                                color: 'white',
-                                                                border: 'none',
-                                                                borderRadius: '4px',
-                                                                cursor: 'pointer',
-                                                                fontWeight: '600',
-                                                                fontSize: '10px',
-                                                                whiteSpace: 'nowrap'
-                                                            }}>
+                                                            <button
+                                                                onClick={() => handleCheckIn(t.id)}
+                                                                style={{
+                                                                    padding: '4px 8px',
+                                                                    background: '#fe2c55',
+                                                                    color: 'white',
+                                                                    border: 'none',
+                                                                    borderRadius: '4px',
+                                                                    cursor: 'pointer',
+                                                                    fontWeight: '600',
+                                                                    fontSize: '10px',
+                                                                    whiteSpace: 'nowrap'
+                                                                }}>
                                                                 📸
                                                             </button>
                                                         )}
