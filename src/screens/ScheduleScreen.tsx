@@ -18,45 +18,45 @@ export function ScheduleScreen() {
             </div>
 
             {/* Stats Cards - Beautiful Design */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '24px' }}>
                 <div style={{
                     background: 'linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%)',
-                    borderRadius: '20px',
-                    padding: '24px 16px',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    borderRadius: '10px',
+                    padding: '12px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                     textAlign: 'center',
                     border: '1px solid rgba(34, 197, 94, 0.1)'
                 }}>
-                    <div style={{ fontSize: '36px', marginBottom: '8px' }}>🌱</div>
-                    <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px', fontWeight: '600' }}>Green Points</div>
-                    <div style={{ fontSize: '32px', fontWeight: '800', color: '#22c55e', marginBottom: '4px' }}>120</div>
-                    <div style={{ fontSize: '12px', color: '#666', fontWeight: '500' }}>+18 hôm nay</div>
+                    <div style={{ fontSize: '24px', marginBottom: '6px' }}>🌱</div>
+                    <div style={{ fontSize: '10px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '4px', fontWeight: '600' }}>Green Points</div>
+                    <div style={{ fontSize: '22px', fontWeight: '800', color: '#22c55e', marginBottom: '2px' }}>120</div>
+                    <div style={{ fontSize: '10px', color: '#666', fontWeight: '500' }}>+18 hôm nay</div>
                 </div>
                 <div style={{
                     background: 'linear-gradient(135deg, #ffffff 0%, #dbeafe 100%)',
-                    borderRadius: '20px',
-                    padding: '24px 16px',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    borderRadius: '10px',
+                    padding: '12px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                     textAlign: 'center',
                     border: '1px solid rgba(59, 130, 246, 0.1)'
                 }}>
-                    <div style={{ fontSize: '36px', marginBottom: '8px' }}>🌍</div>
-                    <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px', fontWeight: '600' }}>CO₂ Saved</div>
-                    <div style={{ fontSize: '32px', fontWeight: '800', color: '#3b82f6', marginBottom: '4px' }}>0.9kg</div>
-                    <div style={{ fontSize: '12px', color: '#666', fontWeight: '500' }}>tuần này</div>
+                    <div style={{ fontSize: '24px', marginBottom: '6px' }}>🌍</div>
+                    <div style={{ fontSize: '10px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '4px', fontWeight: '600' }}>CO₂ Saved</div>
+                    <div style={{ fontSize: '22px', fontWeight: '800', color: '#3b82f6', marginBottom: '2px' }}>0.9kg</div>
+                    <div style={{ fontSize: '10px', color: '#666', fontWeight: '500' }}>tuần này</div>
                 </div>
                 <div style={{
                     background: 'linear-gradient(135deg, #ffffff 0%, #fee2e2 100%)',
-                    borderRadius: '20px',
-                    padding: '24px 16px',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    borderRadius: '10px',
+                    padding: '12px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                     textAlign: 'center',
                     border: '1px solid rgba(239, 68, 68, 0.1)'
                 }}>
-                    <div style={{ fontSize: '36px', marginBottom: '8px' }}>🔥</div>
-                    <div style={{ fontSize: '11px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px', fontWeight: '600' }}>Streak</div>
-                    <div style={{ fontSize: '32px', fontWeight: '800', color: '#ef4444', marginBottom: '4px' }}>4</div>
-                    <div style={{ fontSize: '12px', color: '#666', fontWeight: '500' }}>ngày</div>
+                    <div style={{ fontSize: '24px', marginBottom: '6px' }}>🔥</div>
+                    <div style={{ fontSize: '10px', color: '#888', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '4px', fontWeight: '600' }}>Streak</div>
+                    <div style={{ fontSize: '22px', fontWeight: '800', color: '#ef4444', marginBottom: '2px' }}>4</div>
+                    <div style={{ fontSize: '10px', color: '#666', fontWeight: '500' }}>ngày</div>
                 </div>
             </div>
 

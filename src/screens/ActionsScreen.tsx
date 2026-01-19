@@ -48,38 +48,38 @@ export function ActionsScreen() {
     };
 
     return (
-        <div style={{ padding: '24px', background: '#f8f9fa', minHeight: '100vh' }}>
+        <div style={{ padding: '12px', minHeight: '100vh' }}>
             {/* Header */}
-            <div style={{ marginBottom: '24px' }}>
-                <h2 style={{ fontSize: '24px', fontWeight: '800', margin: 0, color: '#333' }}>Todo theo môn</h2>
-                <div style={{ fontSize: '14px', color: '#666', marginTop: '4px' }}>Việc học + việc xanh (Locket FTU)</div>
+            <div style={{ marginBottom: '16px' }}>
+                <h2 style={{ fontSize: '28px', fontWeight: '800', margin: 0, color: '#333' }}>Todo theo môn</h2>
+                <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>Việc học + việc xanh (Locket FTU)</div>
             </div>
 
             {/* Quick Add Card */}
-            <div style={{ background: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', marginBottom: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ background: 'white', borderRadius: '10px', padding: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                     <div>
-                        <div style={{ fontWeight: '700', fontSize: '16px', color: '#333', marginBottom: '4px' }}>Quick add</div>
-                        <div style={{ fontSize: '13px', color: '#666' }}>Tự thêm việc (sẽ nhắc lại vào lần học sau)</div>
+                        <div style={{ fontWeight: '700', fontSize: '13px', color: '#333', marginBottom: '2px' }}>Quick add</div>
+                        <div style={{ fontSize: '11px', color: '#666' }}>Tự thêm việc</div>
                     </div>
                     <button
                         onClick={() => setShowAddModal(true)}
                         style={{
-                            padding: '10px 20px',
+                            padding: '8px 14px',
                             background: '#fe2c55',
                             color: 'white',
                             border: 'none',
                             borderRadius: '6px',
                             fontWeight: '700',
                             cursor: 'pointer',
-                            fontSize: '14px'
+                            fontSize: '12px'
                         }}
                     >
                         ＋ Thêm
                     </button>
                 </div>
-                <div style={{ marginTop: '12px', background: '#fff7e6', border: '1px solid #ffe0b2', borderRadius: '8px', padding: '12px', fontSize: '13px', color: '#d35400' }}>
-                    Ví dụ: "Mang bình nước", "Note bài chương 3", "Không mua đồ nhựa sau break"
+                <div style={{ background: '#fff7e6', border: '1px solid #ffe0b2', borderRadius: '6px', padding: '8px', fontSize: '11px', color: '#d35400' }}>
+                    VD: "Mang bình nước", "Note bài chương 3"
                 </div>
             </div>
 
@@ -174,7 +174,7 @@ export function ActionsScreen() {
 
             {/* Todo List by Class */}
             <div>
-                <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: '#333' }}>Danh sách Todo</h3>
+                <h3 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '12px', color: '#333' }}>Danh sách Todo</h3>
 
                 {todayClasses.map((cl) => {
                     const list = getAllTodos(cl.id);
@@ -184,36 +184,32 @@ export function ActionsScreen() {
                     const totalCount = list.length;
 
                     return (
-                        <div key={cl.id} style={{ background: 'white', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', marginBottom: '16px', overflow: 'hidden' }}>
+                        <div key={cl.id} style={{ background: 'white', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', marginBottom: '12px', overflow: 'hidden' }}>
                             {/* Class Header */}
-                            <div style={{ background: '#f8f9fa', padding: '16px', borderBottom: '1px solid #e9ecef' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <div>
-                                        <div style={{ fontWeight: '700', fontSize: '16px', color: '#333' }}>{cl.title}</div>
-                                        <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
-                                            {cl.start} – {cl.end} • {cl.room}
-                                        </div>
+                            <div style={{ background: '#f8f9fa', padding: '10px 12px', borderBottom: '1px solid #e9ecef' }}>
+                                <div style={{ marginBottom: '6px' }}>
+                                    <div style={{ fontWeight: '700', fontSize: '13px', color: '#333' }}>{cl.title}</div>
+                                    <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>
+                                        {cl.start} – {cl.end} • {cl.room}
                                     </div>
-                                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                        <span style={{ background: '#e6fffa', color: '#00b894', padding: '6px 12px', borderRadius: '30px', fontSize: '12px', fontWeight: 'bold' }}>
-                                            {completedCount}/{totalCount} hoàn thành
-                                        </span>
-                                        <span style={{ background: '#fff7e6', color: '#d35400', padding: '6px 12px', borderRadius: '30px', fontSize: '12px', fontWeight: 'bold' }}>
-                                            Nhắc trước giờ học
-                                        </span>
-                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                                    <span style={{ background: '#e6fffa', color: '#00b894', padding: '4px 8px', borderRadius: '20px', fontSize: '10px', fontWeight: 'bold' }}>
+                                        {completedCount}/{totalCount} hoàn thành
+                                    </span>
+                                    <span style={{ background: '#fff7e6', color: '#d35400', padding: '4px 8px', borderRadius: '20px', fontSize: '10px', fontWeight: 'bold' }}>
+                                        Nhắc trước giờ học
+                                    </span>
                                 </div>
                             </div>
 
                             {/* Todo Items */}
                             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                 <thead style={{ background: '#fafafa', borderBottom: '1px solid #e9ecef' }}>
-                                    <tr style={{ textAlign: 'left', color: '#6c757d', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                                        <th style={{ padding: '12px 16px', width: '40px' }}>✓</th>
-                                        <th style={{ padding: '12px 16px' }}>Việc cần làm</th>
-                                        <th style={{ padding: '12px 16px' }}>Quy tắc</th>
-                                        <th style={{ padding: '12px 16px' }}>Loại</th>
-                                        <th style={{ padding: '12px 16px', textAlign: 'center' }}>Hành động</th>
+                                    <tr style={{ textAlign: 'left', color: '#6c757d', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                                        <th style={{ padding: '8px 10px', width: '30px' }}>✓</th>
+                                        <th style={{ padding: '8px 10px' }}>Việc cần làm</th>
+                                        <th style={{ padding: '8px 10px', width: '60px' }}>Loại</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -225,13 +221,13 @@ export function ActionsScreen() {
                                                 opacity: isCompleted ? 0.6 : 1,
                                                 transition: 'opacity 0.2s'
                                             }}>
-                                                <td style={{ padding: '16px', textAlign: 'center' }}>
+                                                <td style={{ padding: '10px', textAlign: 'center' }}>
                                                     <button
                                                         onClick={() => toggleTodo(t.id)}
                                                         style={{
-                                                            width: '24px',
-                                                            height: '24px',
-                                                            borderRadius: '6px',
+                                                            width: '20px',
+                                                            height: '20px',
+                                                            borderRadius: '5px',
                                                             border: isCompleted ? 'none' : '2px solid #ddd',
                                                             background: isCompleted ? '#00b894' : 'white',
                                                             color: 'white',
@@ -239,78 +235,58 @@ export function ActionsScreen() {
                                                             display: 'flex',
                                                             alignItems: 'center',
                                                             justifyContent: 'center',
-                                                            fontSize: '14px',
+                                                            fontSize: '12px',
                                                             fontWeight: 'bold'
                                                         }}
                                                     >
                                                         {isCompleted && '✓'}
                                                     </button>
                                                 </td>
-                                                <td style={{ padding: '16px' }}>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                                        <span style={{ fontSize: '24px' }}>{t.icon}</span>
-                                                        <div>
+                                                <td style={{ padding: '10px' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                                                        <span style={{ fontSize: '18px', flexShrink: 0 }}>{t.icon}</span>
+                                                        <div style={{ flex: 1, minWidth: 0 }}>
                                                             <div style={{
                                                                 fontWeight: '600',
-                                                                fontSize: '14px',
+                                                                fontSize: '12px',
                                                                 color: '#2c3e50',
-                                                                textDecoration: isCompleted ? 'line-through' : 'none'
+                                                                textDecoration: isCompleted ? 'line-through' : 'none',
+                                                                wordBreak: 'break-word'
                                                             }}>
                                                                 {t.title}
                                                             </div>
-                                                            {'desc' in t && t.desc && <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>{t.desc}</div>}
+                                                            {'desc' in t && t.desc && <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>{t.desc}</div>}
+                                                            {'rule' in t && t.rule && <div style={{ fontSize: '10px', color: '#999', marginTop: '2px' }}>⏱ {t.rule}</div>}
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td style={{ padding: '16px', fontSize: '13px', color: '#666' }}>
-                                                    {'rule' in t && t.rule ? `⏱ ${t.rule}` : '—'}
-                                                </td>
-                                                <td style={{ padding: '16px' }}>
-                                                    {t.kind === 'green' ? (
-                                                        <span style={{ background: '#e6fffa', color: '#00b894', padding: '6px 12px', borderRadius: '30px', fontSize: '12px', fontWeight: 'bold' }}>
-                                                            🌿 Green {('points' in t && t.points) ? `(+${t.points})` : ''}
-                                                        </span>
-                                                    ) : (
-                                                        <span style={{ background: '#f1f2f6', color: '#747d8c', padding: '6px 12px', borderRadius: '30px', fontSize: '12px', fontWeight: 'bold' }}>
-                                                            📚 Học tập
-                                                        </span>
-                                                    )}
-                                                </td>
-                                                <td style={{ padding: '16px', textAlign: 'center' }}>
-                                                    {t.kind === 'green' && !isCompleted ? (
-                                                        <button style={{
-                                                            padding: '8px 16px',
-                                                            background: '#fe2c55',
-                                                            color: 'white',
-                                                            border: 'none',
-                                                            borderRadius: '6px',
-                                                            cursor: 'pointer',
-                                                            fontWeight: '600',
-                                                            fontSize: '13px'
-                                                        }}>
-                                                            📸 Check-in
-                                                        </button>
-                                                    ) : isCompleted ? (
-                                                        <span style={{ fontSize: '13px', color: '#00b894', fontWeight: '600' }}>
-                                                            ✓ Hoàn thành
-                                                        </span>
-                                                    ) : (
-                                                        <button
-                                                            onClick={() => toggleTodo(t.id)}
-                                                            style={{
-                                                                padding: '8px 16px',
-                                                                background: '#f1f1f2',
-                                                                color: '#161823',
+                                                <td style={{ padding: '10px' }}>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-start' }}>
+                                                        {t.kind === 'green' ? (
+                                                            <span style={{ background: '#e6fffa', color: '#00b894', padding: '4px 6px', borderRadius: '20px', fontSize: '10px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                                                                🌿 {('points' in t && t.points) ? `+${t.points}` : 'Green'}
+                                                            </span>
+                                                        ) : (
+                                                            <span style={{ background: '#f1f2f6', color: '#747d8c', padding: '4px 6px', borderRadius: '20px', fontSize: '10px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                                                                📚 Học
+                                                            </span>
+                                                        )}
+                                                        {t.kind === 'green' && !isCompleted && (
+                                                            <button style={{
+                                                                padding: '4px 8px',
+                                                                background: '#fe2c55',
+                                                                color: 'white',
                                                                 border: 'none',
-                                                                borderRadius: '6px',
+                                                                borderRadius: '4px',
                                                                 cursor: 'pointer',
                                                                 fontWeight: '600',
-                                                                fontSize: '13px'
-                                                            }}
-                                                        >
-                                                            Đánh dấu
-                                                        </button>
-                                                    )}
+                                                                fontSize: '10px',
+                                                                whiteSpace: 'nowrap'
+                                                            }}>
+                                                                📸
+                                                            </button>
+                                                        )}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         );

@@ -25,7 +25,7 @@ export function MainLayout({ children, activeTab, onTabChange, onOpenCamera }: M
             <main style={{
                 flex: 1,
                 overflow: 'auto',
-                paddingBottom: '80px', // Space for bottom navigation
+                paddingBottom: '100px', // Space for bottom navigation + extra margin
                 maxWidth: '600px',
                 width: '100%',
                 margin: '0 auto',
